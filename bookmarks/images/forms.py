@@ -37,4 +37,4 @@ class ImageCreateForm(forms.ModelForm):
                          save=False)
         if commit:
             image.save()
-        return image
+        return image 
