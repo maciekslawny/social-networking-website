@@ -5,8 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse
-from django.core.paginator import Paginator, EmptyPage, \
-                                  PageNotAnInteger
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from common.decorators import ajax_required
 from .forms import ImageCreateForm
 from .models import Image
@@ -67,6 +66,8 @@ def image_like(request):
 @login_required
 def image_list(request):
     images = Image.objects.all()
+    images_amount = Image.objects.all()
+    print(images)
     paginator = Paginator(images, 1)
     page = request.GET.get('page')
     try:
@@ -82,9 +83,11 @@ def image_list(request):
         # If page is out of range deliver last page of results
         images = paginator.page(paginator.num_pages)
     if request.is_ajax():
+        
         return render(request,
                       'images/image/list_ajax.html',
                       {'section': 'images', 'images': images})
+
     return render(request,
                   'images/image/list.html',
                    {'section': 'images', 'images': images})
