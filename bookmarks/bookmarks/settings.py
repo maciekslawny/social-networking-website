@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['moja-witryna.pl', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'account.apps.AccountConfig',
+    'actions.apps.ActionsConfig',
     'images.apps.ImagesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'social_django',
     'django_extensions',
     'easy_thumbnails',
+
 ]
 
 MIDDLEWARE = [
@@ -148,3 +150,11 @@ SOCIAL_AUTH_FACEBOOK_SECRET = 'e02eb897b0dd5854d6bf147abaf95ca6' # Facebook App 
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '311179269051-4avk1iupth2kooldosrcbk0nrjqkao3r.apps.googleusercontent.com' # Google Consumer Key
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'AoFE408VJe_ewpsKQ0L1ghnO' # Google Consumer Secret
+
+
+from django.urls import reverse_lazy
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: reverse_lazy('user_detail',
+                                        args=[u.username])
+}
